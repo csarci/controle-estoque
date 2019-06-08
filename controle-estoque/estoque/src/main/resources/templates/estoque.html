@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Controle de Estoque</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div id="listaDeLojas">
+			<h1>Lojas cadastradas no estoque:</h1>
+			
+			<ul class="list-group" th:each="loja : ${lojas}">
+				<div class="row">
+					<div class="col-xs-8" th:text="${loja.nome}"></div>
+					<div class="btn-group pull-right">
+						<a class="btn btn-sm btn-primary" th:href="@{/editarLoja/{id}(id=${loja.id})}">Editar</a>
+						<a class="delete btn btn-sm btn-danger" th:href="@{/deletarLoja/{id}(id=${loja.id})}">Excluir</a>
+					</div>
+				</div>
+			</ul>
+		</div>
+		
+		<form action="salvarLoja" method="POST">
+			<div class="form-group">
+				<label for="nomeLoja">Nome</label>
+				<input type="text" id="nome-loja" name="nome-loja" placeholder="Nome da Loja"/>
+			</div>
+			
+			<button type="submit" class="btn btn-success">Adicionar</button>
+		</form>
+	</div>
+
+	<script src="bootstrap/js/bootstrap.js"></script>
+</body>
+</html>

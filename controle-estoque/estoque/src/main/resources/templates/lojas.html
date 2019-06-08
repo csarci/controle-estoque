@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Controle de Estoque</title>
+	<link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div id="listaDeLojas">
+			<h1>Cadastro de Loja</h1>
+			
+			<form th:object="${loja}" th:action="@{/atualizarLoja}" method="POST">
+				<div class="form-group">
+					<div class="form-group">
+						<div class="form-group row">
+							<div class="col-md-1">
+							   <input type="hidden" class="form-control input-sm" id="id" th:field="*{id}" readOnly="readonly"/>
+							</div>
+						</div>
+						<div class="form-group row">                                                          
+							<div class="col-md-4">
+							    <label>Nome da Loja:</label>
+								<input type="text" class="form-control input-sm" th:field="*{nome}" autofocus="autofocus" placeholder="Informe o nome" maxlength="50"/>
+							</div>
+						</div>
+					</div>	
+					
+					<div class="form-group row">
+						<button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+						<a th:href="@{/}" class="btn btn-sm btn-default">Cancelar</a>
+					</div>
+				</div>
+			</form>
+
+			<div id="listaDeProdutos">
+				<h1>Produtos cadastrados no estoque:</h1>
+					
+				<ul class="list-group" th:each="produto : ${produtos}">
+					<div class="row">
+						<div class="col-xs-8" th:text="${produto.nome}"></div>
+						<div class="col-xs-8" th:text="${produto.preco}"></div>
+						<div class="btn-group pull-right">
+							<a class="btn btn-sm btn-primary" th:href="@{/editarProduto/{id}(id=${produto.id})}">Editar</a>
+							<a class="delete btn btn-sm btn-danger" th:href="@{/deletarProduto/{id}(id=${produto.id})}">Excluir</a>
+						</div>
+					</div>
+				</ul>
+			</div>
+			
+			<form th:object="${produto}" th:action="@{/salvarProduto}" method="POST">
+				<div class="form-group" id="lojaId">
+					<input type="hidden" id="id-loja" name="id-loja"/>
+				</div>
+				<div class="form-group">
+					<label for="nomeProduto">Nome</label>
+					<input type="text" id="nome-produto" name="nome-produto" placeholder="Nome do produto"/>
+				</div>
+				<div class="form-group">
+					<label for="precoProduto">Preço</label>
+					<input type="text" id="preco-produto" name="preco-produto" placeholder="Preço do produto"/>
+				</div>
+				<button type="submit" class="btn btn-success">Adicionar</button>
+			</form>
+		</div>
+		
+	</div>
+		
+	<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+	<script type="text/javascript" src="jquery/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+		var lojaId = document.getElementById("id").value;
+		document.getElementById("id-loja").value = lojaId;
+	</script>
+</body>
+</html>
